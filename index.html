@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SheetDiff — see exactly what changed between two spreadsheets</title>
+    <meta
+      name="description"
+      content="Compare two CSV or Excel files: added rows, removed rows, and changed cells with old and new values. Runs entirely in your browser; nothing is uploaded."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E%F0%9F%93%8A%3C/text%3E%3C/svg%3E"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <h1>SheetDiff</h1>
+      <p class="promise">
+        See exactly what changed between two spreadsheets — which rows, which cells, old value to
+        new value. Runs entirely in your browser.
+      </p>
+    </header>
+
+    <main>
+      <section class="panel" aria-labelledby="input-heading">
+        <h2 id="input-heading">Add two files</h2>
+        <div class="file-grid">
+          <div class="file-slot">
+            <h3>File A — original</h3>
+            <div id="drop-a" class="drop-zone" role="button" tabindex="0" aria-label="Add file A: drop it here, click to choose a file, or paste its text">
+              <p><strong>Drop a file here</strong> or click to choose.</p>
+              <p class="hint">CSV, TSV, semicolon, pipe or .xlsx · up to 5&nbsp;MB</p>
+              <input id="file-a" type="file" accept=".csv,.tsv,.txt,.xlsx,text/csv" hidden />
+            </div>
+            <div class="file-meta">
+              <label class="delimiter-row" for="delimiter-a">
+                Delimiter
+                <select id="delimiter-a">
+                  <option value="">Auto — guessed</option>
+                  <option value=",">Comma ( , )</option>
+                  <option value=";">Semicolon ( ; )</option>
+                  <option value="&#9;">Tab</option>
+                  <option value="|">Pipe ( | )</option>
+                </select>
+              </label>
+              <p id="info-a" class="hint"></p>
+            </div>
+          </div>
+
+          <div class="file-slot">
+            <h3>File B — updated</h3>
+            <div id="drop-b" class="drop-zone" role="button" tabindex="0" aria-label="Add file B: drop it here, click to choose a file, or paste its text">
+              <p><strong>Drop a file here</strong> or click to choose.</p>
+              <p class="hint">CSV, TSV, semicolon, pipe or .xlsx · up to 5&nbsp;MB</p>
+              <input id="file-b" type="file" accept=".csv,.tsv,.txt,.xlsx,text/csv" hidden />
+            </div>
+            <div class="file-meta">
+              <label class="delimiter-row" for="delimiter-b">
+                Delimiter
+                <select id="delimiter-b">
+                  <option value="">Auto — guessed</option>
+                  <option value=",">Comma ( , )</option>
+                  <option value=";">Semicolon ( ; )</option>
+                  <option value="&#9;">Tab</option>
+                  <option value="|">Pipe ( | )</option>
+                </select>
+              </label>
+              <p id="info-b" class="hint"></p>
+            </div>
+          </div>
+        </div>
+        <p class="hint">
+          Drop a file on the left or right half of this page, click a drop zone, or paste text with
+          Ctrl/Cmd&nbsp;+&nbsp;V. Auto-detection is only a guess — override the delimiter if the
+          column count looks wrong. Nothing is uploaded.
+        </p>
+        <p id="status" class="status" role="status"></p>
+      </section>
+
+      <section id="controls" class="panel" aria-labelledby="controls-heading" hidden>
+        <h2 id="controls-heading">How to compare</h2>
+        <div class="control-row">
+          <label for="key-select">
+            Match rows by
+            <select id="key-select"></select>
+          </label>
+          <button id="positional-toggle" type="button" class="secondary">Compare by position instead</button>
+        </div>
+        <p id="key-hint" class="hint"></p>
+        <fieldset class="toggles">
+          <legend>Comparison toggles (all off by default)</legend>
+          <label><input id="toggle-trim" type="checkbox" /> Trim whitespace before comparing</label>
+          <label><input id="toggle-case" type="checkbox" /> Ignore letter case</label>
+          <label><input id="toggle-empty" type="checkbox" /> Treat an empty value as a missing cell</label>
+          <label><input id="toggle-numeric" type="checkbox" /> Numeric-aware compare ("1.0" = "1")</label>
+        </fieldset>
+        <p class="hint">
+          The report always shows both raw values and records which toggles were on. Your files are
+          never modified.
+        </p>
+        <div id="mapping-area" class="mapping-area" hidden>
+          <h3>Map unmatched columns (optional)</h3>
+          <p class="hint">These are guesses. Nothing is mapped until you choose it here.</p>
+          <div id="mapping-list" class="mapping-list"></div>
+        </div>
+      </section>
+
+      <section id="summary" class="panel summary" aria-label="Summary" hidden></section>
+      <section id="results" class="panel" aria-label="Results" hidden></section>
+
+      <section id="report-actions" class="panel" aria-labelledby="report-heading" hidden>
+        <h2 id="report-heading">Export the report</h2>
+        <p>
+          Paste it into a PR or an issue. It contains the differences — row and cell values
+          included — so review it before sharing if the data is sensitive.
+        </p>
+        <div class="button-row">
+          <button id="copy-report" type="button">Copy report</button>
+          <button id="download-report" type="button">Download .md</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        SheetDiff never uploads your files — there is no server, no analytics, and no network calls
+        at runtime. <a href="https://github.com/MHK-ctrl/sheetdiff">Source on GitHub</a> (MIT).
+      </p>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

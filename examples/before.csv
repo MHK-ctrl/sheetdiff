@@ -1,0 +1,7 @@
+id,name,email,plan,mrr,notes
+1001,Ada Lovelace,ada@example.com,pro,49,Founding customer
+1002,Grace Hopper,grace@example.com,pro,49,
+1003,Alan Turing,alan@example.com,basic,19,"Asked about annual billing, follow up"
+1004,Katherine Johnson,katherine@example.com,pro,49,
+1005,Jean Bartik,jean@example.com,basic,19,Churn risk
+1006,Margaret Hamilton,margaret@example.com,team,199,
